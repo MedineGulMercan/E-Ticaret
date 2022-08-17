@@ -1,0 +1,86 @@
+﻿@using E_Ticaret.Models
+@model UrunModel
+<style>
+    .row {
+        padding-bottom: 10px;
+    }
+</style>
+
+<form asp-controller="Urun" asp-action="UrunGuncelle" method="Post">
+
+
+     <input type="hidden" class="form-control" name="Id" value="@Model.Id" />
+    <div class="row">
+        <div class="col-2">
+            <label> Ürün Ad :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="UrunAd" value="@Model.UrunAd"  />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label>  Ürün Fiyat :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="UrunFiyat" required value="@Model.UrunFiyat" placeholder="Tedarikci Ad Giriniz" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label> Ürün Stok :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="UrunStok" required value="@Model.UrunStok" placeholder="Soyad Giriniz" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label>  Ürün Özellik :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="UrunOzellik" required value="@Model.UrunOzellik" placeholder="Sifre Giriniz" />
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-2">
+            <label>Kategori : </label>
+        </div>
+        <div class="col-4">
+            <select name="KategoriId" required class="form-control">
+                @foreach (var item in Model.kategorilerList)
+                {
+                    if (item.Id == Model.KategoriId)
+                    {
+                        <option selected value="@item.Id">@item.KategoriAd</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.KategoriAd</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div> <!--TId-->
+
+
+
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col-4">
+            <div class=" form-group">
+                <button type="submit" class=" btn btn-success">GÜNCELLE</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+

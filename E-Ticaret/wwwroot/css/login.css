@@ -1,0 +1,49 @@
+﻿body {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    background-image: url(/img/slider/slider1.jpg);
+    display: flex;
+    justify-content: center;
+}
+
+.boyut {
+    position: absolute;
+    top: 10%;
+    width: 350px;
+    padding: 10px 10px 10px 10px;
+    background-color: #333333;
+    border-radius: 5px;
+}
+
+.login {
+    text-align: center;
+    color: #A8844A;
+}
+
+    .login input {
+        border-color: #080B1C;
+        color: #A8844A;
+    }
+
+    .login:hover input {
+        border-color: #080B1C;
+        color: #A8844A;
+    }
+
+.button {
+    background-color: #333333;
+    border-radius: 10px;
+    width: 100px;
+    height: 40px;
+    color: white;
+}
+
+    .button:hover {
+        background-color: #333333;
+        border-color: red;
+    }
+
+.logo {
+    background-color: #080B1C;
+    border-radius: 7px;
+}

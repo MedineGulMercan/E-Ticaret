@@ -1,0 +1,113 @@
+﻿@using E_Ticaret.Models
+@model KullanicilarModel
+<style>
+    .row {
+        padding-bottom: 10px;
+    }
+</style>
+
+<form asp-controller="Kullanicilar" asp-action="KullanicilarGuncelle" method="Post">
+    <div class="row">
+        <div class="col-2">
+            <label> Id :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="Id" value="@Model.Id" disabled />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label>  Ad :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="Ad" required value="@Model.Ad" placeholder="Tedarikci Ad Giriniz" />
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-2">
+            <label> Soyad :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="Soyad" required value="@Model.Soyad" placeholder="Soyad Giriniz" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label>  Sifre :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="Sifre" required value="@Model.Sifre" placeholder="Sifre Giriniz" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2">
+            <label>  Mail :  </label>
+        </div>
+        <div class="col-4">
+            <input type="text" class="form-control" name="Mail" required value="@Model.Mail" placeholder="Mail Giriniz" />
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-2">
+            <label>Yetki : </label>
+        </div>
+        <div class="col-4">
+            <select name="YetkiId" required class="form-control">
+                @foreach (var item in Model.YetkilerList)
+                {
+                    if (item.Id == Model.YetkiId)
+                    {
+                        <option selected value="@item.Id">@item.YetkiAd</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.YetkiAd</option>
+                    }
+
+                }
+            </select>
+        </div>
+    </div> <!--TId-->
+
+
+    <div class="row">
+        <div class="col-2">
+            <label>Mağaza Ad : </label>
+        </div>
+        <div class="col-4">
+            <select name="MagazaId" required class="form-control">
+
+                @foreach (var item in Model.MagazalarList)
+                {
+                    if (item.Id == Model.MagazaId)
+                    {
+                        <option selected value="@item.Id">@item.MagazaAd</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.MagazaAd</option>
+                    }
+                }
+            </select>
+        </div>
+    </div> <!--TId-->
+
+
+    <div class="row">
+        <div class="col-2">
+        </div>
+        <div class="col-4">
+            <div class=" form-group">
+                <button type="submit" class=" btn btn-success">GÜNCELLE</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+

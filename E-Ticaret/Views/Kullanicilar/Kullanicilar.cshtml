@@ -1,0 +1,181 @@
+﻿@using Dal.Concrete
+@model KullanicilarModel
+<style>
+    th {
+        padding: 30px 30px 30px
+    }
+
+    td {
+        padding: 30px 30px 30px
+    }
+
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    .btn-success:hover {
+        background-color: forestgreen;
+        z-index: 4;
+        -webkit-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+
+    .btn-danger:hover {
+        background-color: darkred;
+        z-index: 4;
+        -webkit-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+</style>
+<div class="row">
+    <div class="col-2">
+       @*@{
+            KullanicilarDal k = new();
+            if (k.GetAllAsync().Result.FirstOrDefault(x => x.KullaniciAdi == ViewContext.HttpContext.Session.GetString("_Name")).YetkiId == 2)
+            {
+                 
+            }
+         }*@
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-keyboard="false" data-bs-target="#KullanicilarEkleModel">Kullanıcı Ekle</button>
+    </div>
+</div><!---->
+<br>
+<div class="modal fade bd-example-modal-lg" id="KullanicilarEkleModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form method="post" enctype="multipart/form-data" asp-controller="Kullanicilar" asp-action="KullanicilarEkle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Kullanıcı Ekle</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label> Adı : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="Ad" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriAd-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label> Soyadı : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="Soyad" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriSoyad-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Mail : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="email" name="Mail" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriTel-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Şifre : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="password" name="Sifre" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriTel-->
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Yetki : </label>
+                        </div>
+                        <div class="col-6">
+                            <select name="YetkiId" required class="form-control">
+                                @foreach (var item in Model.YetkilerList)
+                                {
+                                    <option value="@item.Id">@item.YetkiAd</option>
+                                }
+                            </select>
+                        </div>
+                    </div> <!--TId-->
+
+
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Mağaza Ad : </label>
+                        </div>
+                        <div class="col-6">
+                            <select name="MagazaId" required class="form-control">
+                                @foreach (var item in Model.MagazalarList)
+                                {
+                                    <option value="@item.Id">@item.MagazaAd</option>
+                                }
+                            </select>
+                        </div>
+                    </div> <!--TId-->
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+
+
+
+            </div>
+
+        </form>
+    </div>
+</div><!--MusteriEkleModel-->
+
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Ad</th>
+            <th scope="col">Soyad</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Sifre</th>
+            <th scope="col">Yetki</th>
+            <th scope="col">Magaza Ad</th>
+            <th scope="col">Magaza Mail</th>
+            <th scope="col">MagazaAdres</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.kullanicilarList.Where(x => x.Aktifmi != false))
+        {
+            <tr>
+                <form method="post" enctype="multipart/form-data" asp-controller="Kullanicilar" asp-action="KullanicilarEkle">
+                <td> @item.Id </td>
+                <td> @item.Ad </td>
+                <td> @item.Soyad </td>
+                <td> @item.Mail </td>
+                <td> @item.Sifre </td>
+                <td> @item.YetkiAd </td>
+                <td> @item.MagazaAd </td>
+                <td> @item.MagazaMail </td>
+                <td> @item.MagazaAdres </td>
+
+
+
+
+                <td><button class="btn btn-danger" asp-controller="Kullanicilar" asp-action="KullanicilarSil" asp-route-Id="@item.Id"><i class="fa-solid fa-trash-can"></i></button></td>
+                </form>
+                <td><a class="btn btn-success" asp-controller="Kullanicilar" asp-action="KullanicilarGuncelle" asp-route-Id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

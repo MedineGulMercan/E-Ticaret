@@ -1,0 +1,156 @@
+﻿@model UrunModel
+<style>
+    th {
+        padding: 30px 30px 30px
+    }
+
+    td {
+        padding: 30px 30px 30px
+    }
+
+
+    .row {
+        margin-bottom: 10px;
+    }
+
+    .btn-success:hover {
+        background-color: forestgreen;
+        z-index: 4;
+        -webkit-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+
+    .btn-danger:hover {
+        background-color: darkred;
+        z-index: 4;
+        -webkit-transform: scale(1.5);
+        -ms-transform: scale(1.5);
+        -moz-transform: scale(1.5);
+        transform: scale(1.5);
+    }
+</style>
+<div class="row">
+    <div class="col-2">
+        @*@{
+        KullanicilarDal k = new();
+        if (k.GetAllAsync().Result.FirstOrDefault(x => x.KullaniciAdi == ViewContext.HttpContext.Session.GetString("_Name")).YetkiId == 2)
+        {
+
+        }
+        }*@
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-backdrop="static" data-bs-keyboard="false" data-bs-target="#UrunEkleModal">Ürün Ekle</button>
+    </div>
+</div><!---->
+<br>
+<div class="modal fade bd-example-modal-lg" id="UrunEkleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <form method="post" enctype="multipart/form-data" asp-controller="Urun" asp-action="UrunEkle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ürün Ekle</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <label> Ürün Adı : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="UrunAd" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriAd-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label> Ürün Fiyat : </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="UrunFiyat" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriSoyad-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Ürün Stok :  </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="UrunStok" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriTel-->
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Ürün Özellik :  </label>
+                        </div>
+                        <div class="col-6">
+                            <input class="form-control" type="text" name="UrunOzellik" required maxlength="100" />
+                        </div>
+                    </div><!--MusteriTel-->
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label>Kategori : </label>
+                        </div>
+                        <div class="col-6">
+                            <select name="KategoriId" required class="form-control">
+                                @foreach (var item in Model.kategorilerList)
+                                {
+                                    <option value="@item.Id">@item.KategoriAd</option>
+                                }
+                            </select>
+                        </div>
+                    </div> <!--TId-->
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+
+
+
+            </div>
+
+        </form>
+    </div>
+</div><!--MusteriEkleModel-->
+
+<table class="table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Ürün Ad</th>
+            <th scope="col">Ürün Fİyat</th>
+            <th scope="col">Ürün Stok</th>
+            <th scope="col">Ürün Özellik</th>
+            <th scope="col">Kategori Ad</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+
+    </thead>
+    <tbody>
+        @foreach (var item in Model.urunlerList.Where(x => x.Aktifmi != false))
+        {
+            <tr>
+                <form method="post" enctype="multipart/form-data" asp-controller="Kullanicilar" asp-action="KullanicilarEkle">
+                <td> @item.Id </td>
+                <td> @item.UrunAd </td>
+                <td> @item.UrunFiyat </td>
+                <td> @item.UrunStok </td>
+                <td> @item.UrunOzellik </td>
+                <td> @item.KategoriAd </td>
+  
+
+
+
+
+                <td><button class="btn btn-danger" asp-controller="Urun" asp-action="UrunSil" asp-route-Id="@item.Id"><i class="fa-solid fa-trash-can"></i></button></td>
+                </form>
+                <td><a class="btn btn-success" asp-controller="Urun" asp-action="UrunGuncelle" asp-route-Id="@item.Id"><i class="fa-solid fa-pen-to-square"></i></a></td>
+            </tr>
+        }
+    </tbody>
+</table>
